@@ -1,0 +1,46 @@
+현재 페이지 번호
+int currentPage = Integer.parseInt("pageNum");
+////////////////////////////////////////////////////
+
+레코드의 총수
+int totalCount="select count(*) from board";
+
+한 화면(페이지)에 보여줄 레코드수
+int recordCount=5;
+
+한 화면(페이지)에 보여줄 시작레코드번호
+int startRow = (currentPage - 1) * recordCount+ 1;
+
+한 화면(페이지)에 보여줄 끝레코드번호
+int endRow = startRow+ recordCount-1;
+
+/////////////////////////////////////////////////////////
+
+한 블록에 보여줄 페이지수
+int blockPage=3;
+
+페이지 총수                         
+ int totalPage = totalCount / recordCount+ ( totalCount % recordCount == 0 ? 0 : 1);
+
+한 블록에 보여줄 시작페이지 번호
+int startPage = (int)((currentPage-1)/blockPage)*blockPage+1;
+
+한 블록에 보여줄 마지막페이지 번호
+ int endPage = startPage+blockPage-1;
+ if (endPage > totalPage) endPage = totalPage;
+
+/////////////////////////////////////
+리스트 게시물가져오기
+select b.* from
+(select rownum as rowm,a.* from (select * from board order by ref desc)a)b
+ where b.rowm>=? and b.rowm<=? order by b.ref desc, b.re_step asc
+
+list.jsp에서  표시해줄 레코드번호
+int number=totalCount-((currentPage-1)*recordCount);
+
+
+
+
+
+
+ 
